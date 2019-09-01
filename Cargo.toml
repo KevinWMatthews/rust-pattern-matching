@@ -19,3 +19,7 @@ path = "src/copy_type_references.rs"
 [[bin]]
 name = "non_copy_types"
 path = "src/non_copy_types.rs"
+
+[[bin]]
+name = "non_copy_type_references"
+path = "src/non_copy_type_references.rs"
