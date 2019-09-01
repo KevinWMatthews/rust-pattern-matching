@@ -1,6 +1,6 @@
 # Pattern Matching in Rust
 
-Supporting content for [this blog post](https://blog.kevinwmatthews.com/matching-in-rust/).
+Supporting content for [this blog post](https://blog.kevinwmatthews.com/pattern-matching-in-rust/).
 
 
 ## Prerequisites
