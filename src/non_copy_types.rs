@@ -10,7 +10,7 @@ fn own_matched() {
 
     match maybe_number {
         Some(owns_box) => {
-            let x = *owns_box;
+            let x = *owns_box;  // Dereference Box
             println!("Found something: {}", x);
         },
         None => println!("Found nothing"),
@@ -26,15 +26,14 @@ fn own_matched() {
 }
 
 fn old_borrow_matched() {
-    // Old-style Rust? Deprecated by match ergonomics?
-    // Might be better to use:
+    // Deprecated by match ergonomics? Might be better to use:
     // match &maybe_number
 
     let maybe_number = Some(Box::new(42));
     // let maybe_number: Option<Box<i32>> = None;
 
     match maybe_number {
-        Some(ref borrows_box) => {      // Explicitly bind Box as a reference
+        Some(ref borrows_box) => {  // Explicitly bind Box as a reference
             let x = **borrows_box;
             println!("Found something: {}", x);
         },

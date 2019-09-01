@@ -9,9 +9,13 @@ fn borrow_matched() {
     let maybe_number = Some(Box::new(42));
     // let maybe_number: Option<Box<i32>> = None;
 
-    match &maybe_number {       // Reference match expression
-        Some(borrows_box) => {  // Non-reference pattern; Option and Box are bound as ref by default
-            // Dereference the borrow, then dereference the Box
+    match &maybe_number {   // Reference match expression
+        // Non-reference pattern
+        // Match ergonomics will:
+        // pattern-match the Option as a reference
+        // bind the Option's value as a reference
+        Some(borrows_box) => {
+            // Dereference borrow, then dereference Box
             let x = **borrows_box;
             println!("Found something: {}", x);
         },
@@ -30,18 +34,18 @@ fn borrow_matched_error() {
     let maybe_number = Some(Box::new(42));
     // let maybe_number: Option<Box<i32>> = None;
 
-    /*
     match &maybe_number {
         Some(borrows_box) => {
             // Compiler error - move out of box into a new variable
             // This can't be done because the match only borrows the value.
+            /*
             let the_box = *borrows_box;
             let x = *the_box;
             println!("Found something: {}", x);
+            */
         },
         None => println!("Found nothing"),
     }
-    */
 }
 
 #[allow(unused)]
@@ -68,9 +72,14 @@ fn old_borrow_matched1() {
 
     let maybe_number_ref = &maybe_number;
 
-    match maybe_number_ref {            // Reference match expression
-        &Some(ref _borrows_box) => {},  // Reference pattern; must explicitly borrow the Box using 'ref'
-        &None => {},
+    match maybe_number_ref {    // Reference match expression
+        // Reference pattern, explicit borrow using 'ref'
+        &Some(ref borrows_box) => {
+            // Dereference borrow, then dereference Box
+            let x = **borrows_box;
+            println!("Found something: {}", x);
+        },
+        &None => println!("Found nothing"),
     }
 }
 
@@ -80,8 +89,13 @@ fn old_borrow_matched2() {
 
     let maybe_number_ref = &maybe_number;
 
-    match *maybe_number_ref {           // Dereference; non-reference match expression
-        Some(ref _borrows_box) => {},   // Non-reference pattern; must explicitly borrow the Box using 'ref'
-        None => {},
+    match *maybe_number_ref {   // Non-reference match expression
+        // Non-reference pattern, explicit borrow using 'ref'
+        Some(ref borrows_box) => {
+            // Dereference borrow, then dereference Box
+            let x = **borrows_box;
+            println!("Found something: {}", x);
+        },
+        None => println!("Found nothing"),
     }
 }
