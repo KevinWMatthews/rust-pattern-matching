@@ -11,3 +11,7 @@ edition = "2018"
 [[bin]]
 name = "copy_types"
 path = "src/copy_types.rs"
+
+[[bin]]
+name = "copy_type_references"
+path = "src/copy_type_references.rs"
